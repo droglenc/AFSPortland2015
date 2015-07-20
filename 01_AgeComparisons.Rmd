@@ -1,0 +1,161 @@
+---
+title: "Comparing Age Assignments"
+author: "Derek H. Ogle, Northland College"
+date: "16-Aug-2015"
+output: pdf_document
+geometry: margin=0.5in
+---
+
+```{r echo=FALSE, results='hide'}
+library(knitr)
+source("knitr_setup.R")
+dothis <- FALSE
+#dothis <- TRUE  # uncomment to show answer key
+```
+
+#Preliminaries
+```{r results='hide', warning=FALSE, message=FALSE}
+library(FSA)                         # for ageBias(), agePrecision()
+```
+
+# Loading Data
+```{r}
+SB <- read.csv("StripedBass4.csv")   # appropriately set the working directory before this
+str(SB)
+```
+
+# Examine Age Bias
+```{r}
+ab <- ageBias(reader2~reader1,data=SB)
+```
+
+```{r}
+summary(ab,what="table",flip.table=TRUE)
+summary(ab,what="symmetry")
+```
+
+\newpage
+```{r}
+summary(ab,what="bias")
+```
+
+```{r fig.show='hold'}
+plot(ab)                                              # Left
+plot(ab,diff=TRUE)                                    # Right
+```
+```{r fig.show='hold'}
+plot(ab,diff=TRUE,show.range=TRUE)                    # Left
+plot(ab,diff=TRUE,show.pts=TRUE,transparency=1/25)    # Right
+```
+```{r fig.width=6, fig.height=6}
+plot(ab,what="numbers",xlim=c(2,20),ylim=c(2,20))
+```
+
+# Examine Age Precision
+```{r}
+ap <- agePrecision(reader2~reader1,data=SB)
+summary(ap,what="difference",digits=1)
+summary(ap,what="absolute difference",digits=2)
+summary(ap,what="precision")
+```
+```{r eval=FALSE}
+summary(ap,what="detail")  # only some rows shown
+```
+```{r echo=FALSE}
+headtail(ap$detail)
+```
+
+# Application Assignment
+\vspace{-6pt}
+Herbst and Marsden (2012) [reprint is here](http://www.uvm.edu/rsenr/emarsden/documents/Herbst%20and%20Marsden%20whitefish%20age%20structure%20comparison.pdf) compared the precision, bias, and reader uncertainty of scales, dorsal fin rays, and otolith age estimates from 151 lake whitefish (*Coregonus clupeaformis*) from Lake Champlain in 2009.  The data for their comparisons were recorded in `WhitefishLC.csv`.  This file contains inital age assessments for two readers on three structures (variable names are the structure name with a "1"" or "2"" appended to denote the reader).  In addition, the two readers developed a consensus age (variable name is the structure name with a "C"" appended).
+```{r eval=dothis, echo=dothis}
+wf <- read.csv("WhitefishLC.csv")
+str(wf)
+```
+
+Create a script that performs the following tasks:
+
+1. Use a variety of methods (tabular, graphical, and statistical) to describe any apparent bias in **consensus** ages between scales and otoliths.
+```{r eval=dothis, echo=dothis}
+ab1 <- ageBias(scaleC~otolithC,data=wf,ref.lab="Otolith Age",nref.lab="Scale Age")
+summary(ab1,what="symmetry",flip.table=TRUE)
+summary(ab1,what="bias")
+plot(ab1,xlim=c(0,25),ylim=c(0,25))
+```
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThe age-agreement table is significantly asymmetric (p<",kPvalue(max(summary(ab1,what='symmetry')$p),include.p=FALSE),").  Otolith ages appear to be significantly greater than scale age from age 6 on, with the exception of age-7 and also noting that significance is difficult to determine for ages beyond age-13 because of small sample sizes.",sep="")
+```
+
+2. Describe any apparent bias in age assessment for otoliths between the two readers.
+```{r eval=dothis, echo=dothis}
+ab2 <- ageBias(otolith2~otolith1,data=wf,ref.lab="Reader 1",nref.lab="Reader 2")
+summary(ab2,what="symmetry",flip.table=TRUE)
+summary(ab2,what="bias")
+plot(ab2,xlim=c(0,25),ylim=c(0,25))
+```
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThe age-agreement table appears to be symmetric (p>",kPvalue(min(summary(ab2,what="symmetry")$p),include.p=FALSE),") and there is no significant difference in assessed ages at any age between the two readers.  The ages are, on average, the same from the two readers.",sep="")
+```
+
+3. Describe precision of age assessment for otoliths between the two readers.
+```{r eval=dothis, echo=dothis}
+ap2 <- agePrecision(otolith2~otolith1,data=wf)
+summary(ap2,what=c("difference","precision"))
+```
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThe two readers agreed on age ",formatC(ap2$absdiff["0"]/ap2$n*100,format="f",digits=1),"% of the time and were within one year ",formatC(sum(ap2$absdiff[c("0","1")]/ap2$n*100),format="f",digits=1),"% of the time.  Using the criterion of Campana (2001), the age assessments from otoliths were precise (i.e., the CV=",formatC(ap2$ACV,format="f",digits=1),"<5.)",sep="")
+```
+
+4. (*Time Permitting*) Describe any apparent bias in age assessment for scales between the two readers.
+```{r eval=dothis, echo=dothis}
+ab3 <- ageBias(scale2~scale1,data=wf,ref.lab="Reader 1",nref.lab="Reader 2")
+summary(ab3,what="symmetry",flip.table=TRUE)
+summary(ab3,what="bias")
+plot(ab3,xlim=c(0,16),ylim=c(0,20))
+```
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThe age-agreement table appears to be symmetric  (p>",kPvalue(min(summary(ab3,what="symmetry")$p),include.p=FALSE),") and there is no significant difference in assessed ages at any age between the two readers.  The ages are, on average, the same from the two readers.",sep="")
+```
+
+5. (*Time Permitting*) Describe precision of age assessment for scales between the two readers.
+```{r eval=dothis, echo=dothis}
+ap3 <- agePrecision(scale2~scale1,data=wf)
+summary(ap3,what=c("difference","precision"))
+```
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThe two readers agreed on age only ",formatC(ap3$absdiff["0"]/ap3$n*100,format="f",digits=1),"% of the time and were within two years ",formatC(sum(ap3$absdiff[c("0","1","2")])/ap3$n*100,format="f",digits=1),"% of the time.  The maximum difference in age assessment was ",max(as.numeric(names(ap3$absdiff))),".  Using the criterion of Campana (2001), the age assessments from scales were NOT precise (i.e., the CV=",formatC(ap3$ACV,format="f",digits=1),">5.)",sep="")
+```
+
+6. (*Time Permitting*) Use a variety of methods (tabular, graphical, and statistical) to describe any apparent bias in **consensus** ages between fin rays and otoliths.
+```{r eval=dothis, echo=dothis}
+ab4 <- ageBias(finrayC~otolithC,data=wf,ref.lab="Otolith Age",nref.lab="Fin Ray Age")
+summary(ab4,what="symmetry",flip.table=TRUE)
+summary(ab4,what="bias")
+plot(ab4,xlim=c(0,23),ylim=c(0,23))
+```
+
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThe age-agreement table is significantly asymmetric (p<",kPvalue(max(summary(ab4,what="symmetry")$p),include.p=FALSE),").  Otolith ages appear to be significantly greater than fin ray age from age 7 on, but also noting that significance is difficult to determine for ages beyond age-14 because of small sample sizes.  Also, note that fin ray age for age-4 otoliths were significantly less than 4, indicating that the divergence in ages could begin as early as age-4.",sep="")
+```
+
+7. (*Time Permitting*) Describe any apparent bias in age assessment for fin rays between the two readers.
+```{r eval=dothis, echo=dothis}
+ab5 <- ageBias(finray2~finray1,data=wf,ref.lab="Reader 1",nref.lab="Reader 2")
+summary(ab5,what="symmetry",flip.table=TRUE)
+summary(ab5,what="bias")
+plot(ab5,xlim=c(0,15),ylim=c(0,15))
+```
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThe age-agreement table appears to be asymmetric  (p<",kPvalue(max(summary(ab5,what="symmetry")$p),include.p=FALSE),"), with some evidence for slightly greater ages from reader 2 for ages 4 to 9 for reader 1 and slightly younger ages for ages 11-13 for reader 1.  The only significant difference was that the mean assessed age for reader 2 was greater than 6 for reader 1's age-6 fish.",sep="")
+```
+
+8. (*Time Permitting*) Describe precision of age assessment for fin rays between the two readers.
+```{r eval=dothis, echo=dothis}
+ap5 <- agePrecision(finray2~finray1,data=wf)
+summary(ap5,what=c("difference","precision"))
+```
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThe two readers agreed on age ",formatC(ap5$absdiff["0"]/ap5$n*100,format="f",digits=1),"% of the time and were within one year ",formatC(sum(ap5$absdiff[c("0","1")])/ap5$n*100,format="f",digits=1),"% of the time.  Using the criterion of Campana (2001), the age assessments from fin rays were somewhat imprecise (i.e., the CV=",formatC(ap5$ACV,format="f",digits=1),">5.)",sep="")
+```
+
+**Save your script!**
