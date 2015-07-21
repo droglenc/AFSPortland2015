@@ -1,0 +1,138 @@
+---
+title: "Construct Age-Length Keys"
+author: "Derek H. Ogle, Northland College"
+date: "16-Aug-2015"
+output: pdf_document
+geometry: margin=0.5in
+---
+
+```{r echo=FALSE, results='hide'}
+library(knitr)
+source("knitr_setup.R")
+dothis <- FALSE
+#dothis <- TRUE  # uncomment to show answer key
+```
+
+#Preliminaries
+```{r results='hide', warning=FALSE, message=FALSE}
+library(FSA)                         # for headtail()
+library(dplyr)                       # for filter()
+library(nnet)                        # for multinom()
+```
+
+# Loading and Preparing Data
+```{r}
+sp <- read.csv("SpotVA2.csv",header=TRUE)   # appropriately set the working directory before this
+headtail(sp)
+```
+
+```{r}
+sp.len <- filter(sp,is.na(age))
+headtail(sp.len)
+sp.age <- filter(sp,!is.na(age))
+headtail(sp.age)
+```
+
+```{r}
+Summarize(~tl,data=sp.age,digits=1)
+sp.age.mod <- lencat(~tl,data=sp.age,startcat=6,w=1)
+headtail(sp.age.mod)
+```
+
+# Observed Age-Length Key
+```{r}
+( raw <- xtabs(~LCat+age,data=sp.age.mod) )
+( ALK.obs <- prop.table(raw,margin=1) )
+```
+
+# Smoothed Age-Length Key
+```{r}
+mlr <- multinom(age~LCat,data=sp.age.mod,maxit=500)
+```
+```{r}
+lens <- 6:13
+ALK.sm <- predict(mlr,data.frame(LCat=lens),type="probs")
+row.names(ALK.sm) <- lens
+round(ALK.sm,3)
+```
+
+# Visualizing an Age-Length Key
+```{r fig.show='hold'}
+alkPlot(ALK.obs,pal="gray",xlab="Total Length (cm)")
+alkPlot(ALK.sm,xlab="Total Length (cm)")
+alkPlot(ALK.sm,pal="gray",showLegend=TRUE,xlab="Total Length (cm)")
+alkPlot(ALK.sm,type="area",pal="gray",showLegend=TRUE,xlab="Total Length (cm)")
+alkPlot(ALK.sm,type="lines",pal="gray",xlab="Total Length (cm)")
+alkPlot(ALK.sm,type="bubble",xlab="Total Length (cm)")
+```
+
+
+\vspace{24pt}
+# Application Assignment
+\vspace{-6pt}
+Wolfert (1980) examined the population of Rock Bass (*Ambloplites rupestris*) from Eastern Lake Ontario in the late 1970s.  In his studies, he measured the total length of 1288 Rock Bass.  Scales were removed for age assignment from as many as 10 fish from each 10-mm length interval.  The lengths and ages (if they existed) from all 1288 fish are recorded in `RockBassLO2.csv` [Note: the filename contains an "oh" not a "zero."].  
+
+Create a script that performs the following tasks:
+
+1. Separate the observed data into age- and length-samples.  How many fish are in the age-sample?  How many fish are in the length-sample?
+```{r eval=dothis, echo=dothis}
+rb <- read.csv("RockBassLO2.csv")
+rb.len <- filter(rb,is.na(age))
+rb.age <- filter(rb,!is.na(age))
+```
+```{r eval=dothis, echo=FALSE, results='asis'}
+cat("\n\nThere are ",nrow(rb.age)," fish in the age-sample and ",nrow(rb.len)," fish in the length-sample.")
+```
+
+2. Add a variable that contains the 10-mm length categories to the age-sample (save as a new data frame).  Then construct a table of the **number** (not proportions) of fish in each age and 10-mm TL category in the age sample.  From these results, compute each of the following **BY HAND** (i.e., not using R). 
+\vspace{-12pt}
+  * How many fish in the age-sample are in the 180-mm length category?
+  * How many age-7 fish are in the age-sample?
+  * What proportion of Rock Bass in the 140-mm length category are age-4?
+  * What proportion of Rock Bass in the 200-mm length category are age-8?
+
+```{r eval=dothis, echo=dothis}
+rb.age <- lencat(~tl,data=rb.age,startcat=110,w=10)
+( tbl <- xtabs(~LCat+age,data=rb.age) )
+```
+```{r eval=dothis, echo=FALSE, results="asis"}
+cat("\n\nThere are ",sum(tbl["180",])," fish in the 180-mm TL category.",sep="")
+cat("\n\nThere are ",sum(tbl[,"7"])," age-7 fish.",sep="")
+cat("\n\nThe proportion of 140-mm TL Rock Bass that are age-4 is ",tbl["140","4"],"/",sum(tbl["140",]),"=",formatC(tbl["140","4"]/sum(tbl["140",]),format="f",digits=2),".",sep="")
+cat("\n\nThe proportion of 200-mm TL Rock Bass that are age-8 is ",tbl["200","8"],"/",sum(tbl["200",]),"=",formatC(tbl["200","8"]/sum(tbl["200",]),format="f",digits=2),".",sep="")
+```
+
+3. Construct an **observed** age-length key from the table above (using R).  From these results answer the following questions.
+\vspace{-24pt}
+  * What proportion of Rock Bass in the 210-mm length category should be assigned an age of 5?
+  * How many of thirty Rock Bass in the 180-mm length category should be assigned an age of 5?
+```{r eval=dothis, echo=dothis}
+( ak <- prop.table(tbl,margin=1) )
+```
+```{r eval=dothis, echo=FALSE, results="asis"}
+cat("\n\nThe proportion of 210-mm Rock Bass that should be assigned an age of five is ",ak["210","5"],".",sep="")
+cat("\n\nThe proportion of 180-mm Rock Bass that should be assigned an age of five is ",ak["180","5"],".  Thus, 30*",ak["180","5"],"=",30*ak["180","5"]," fish should be assigned an age of five.",sep="")
+```
+
+4. Construct a plot of the **observed** age-length key.  Are there any potential anomalies in the plot that would suggest that a smoothed age-length key would be more appropriate.
+```{r eval=dothis, echo=dothis}
+alkPlot(ak,type="area",showLegend=TRUE)
+```
+```{r eval=dothis, echo=FALSE, results="asis"}
+cat("\n\nFor example, age-11 fish present at smaller than larger sizes.")
+```
+5. Construct a **smoothed** age-length key from the aged sample (using R).  From these results answer the same two questions as in Question 3.
+```{r eval=dothis, echo=dothis}
+mlr <- multinom(age~LCat,data=rb.age)
+lens <- seq(110,270,10)
+aks <- predict(mlr,data.frame(LCat=lens),type="probs")
+row.names(aks) <- lens
+round(aks,3)
+```
+```{r eval=dothis, echo=FALSE, results="asis"}
+cat("\n\nThe proportion of 210-mm Rock Bass that should be assigned an age of five is ",formatC(aks["210","5"],format="f",digits=3),".",sep="")
+cat("\n\nThe proportion of 180-mm Rock Bass that should be assigned an age of five is ",formatC(aks["180","5"],format="f",digits=3),".  Thus, 30*",formatC(aks["180","5"],format="f",digits=3),"=",formatC(30*aks["180","5"],format="f",digits=0)," fish should be assigned an age of five.",sep="")
+```
+
+
+**Save your script!**
