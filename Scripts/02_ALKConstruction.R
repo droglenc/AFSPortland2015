@@ -1,77 +1,43 @@
----
-title: "Construct Age-Length Keys"
-author: "Derek H. Ogle, Northland College"
-date: "16-Aug-2015"
-output: pdf_document
-geometry: margin=0.5in
----
+# AFS Portland 16-Aug-15
 
-```{r echo=FALSE, results='hide'}
-library(knitr)
-source("knitr_setup.R")
-```
-
-#Preliminaries
-```{r results='hide', warning=FALSE, message=FALSE}
 library(FSA)                                # for headtail(), alkPlot()
 library(dplyr)                              # for filter(), mutate()
 library(nnet)                               # for multinom()
-```
 
-# Loading and Preparing Data
-```{r}
 sp <- read.csv("data/SpotVA2.csv",header=TRUE)   # appropriately set the working directory before this
 headtail(sp)
-```
 
-```{r echo=FALSE, results='hide'}
 # ############################################################
 # This code demonstrates the use of is.na().  It is not needed
 # for the analysis.
 tmp <- headtail(sp) 
 cbind(tmp,is.na(tmp$age),!is.na(tmp$age))
 # ############################################################
-```
 
-```{r}
 sp.len <- filter(sp,is.na(age))
 headtail(sp.len)
 sp.age <- filter(sp,!is.na(age))
 headtail(sp.age)
-```
 
-```{r}
 sp.age.mod <- mutate(sp.age,lcat=lencat(tl,w=1))
 headtail(sp.age.mod)
-```
 
-# Observed Age-Length Key
-```{r}
 ( raw <- xtabs(~lcat+age,data=sp.age.mod) )
 ( ALK.obs <- prop.table(raw,margin=1) )
-```
 
-# Smoothed Age-Length Key
-```{r}
 mlr <- multinom(age~lcat,data=sp.age.mod,maxit=500)
-```
-```{r}
+
 lens <- 6:13
 ALK.sm <- predict(mlr,data.frame(lcat=lens),type="probs")
 row.names(ALK.sm) <- lens
 round(ALK.sm,3)
-```
 
-# Visualizing an Age-Length Key
-```{r fig.show='hold'}
 alkPlot(ALK.obs,pal="gray",xlab="Total Length (cm)")
 alkPlot(ALK.sm,xlab="Total Length (cm)")
 alkPlot(ALK.sm,pal="gray",showLegend=TRUE,xlab="Total Length (cm)")
 alkPlot(ALK.sm,type="area",pal="gray",showLegend=TRUE,xlab="Total Length (cm)")
 alkPlot(ALK.sm,type="lines",pal="gray",xlab="Total Length (cm)")
 alkPlot(ALK.sm,type="bubble",xlab="Total Length (cm)")
-```
 
-```{r echo=FALSE, results="hide", message=FALSE}
-purl2("02_ALKConstruction.Rmd",moreItems="knitr",out.dir="scripts",topnotes="AFS Portland 16-Aug-15")
-```
+
+# Script created at 2015-07-23 19:38:37
