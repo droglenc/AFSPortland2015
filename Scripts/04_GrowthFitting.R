@@ -25,12 +25,12 @@ vbStarts(tl~age,data=rbt,type="typical",dynamicPlot=TRUE)
 svb2 <- list(Linf=28.7,K=0.52,t0=1.62)
 
 fit1 <- nls(tl~vb(age,Linf,K,t0),data=rbt,start=svb)
-summary(fit1)
+summary(fit1,correlation=TRUE)
 ( cf <- coef(fit1) )
 confint(fit1)
 
-boot1 <- nlsBoot(fit1,niter=200)   # niter should be nearer 1000
-confint(boot1)
+boot1 <- nlsBoot(fit1,niter=1000)
+confint(boot1,plot=TRUE,rows=1,cols=3)
 
 ageX <- 8
 predict(fit1,data.frame(age=ageX))
@@ -42,5 +42,7 @@ quantile(pv,c(0.025,0.975))
 plot(tl~age,data=rbt,xlab=xlbl,ylab=ylbl,pch=16,col=clr)
 curve(vb(x,cf),from=3,to=10,n=500,lwd=2,col="red",add=TRUE)
 
+residPlot(fit1)
 
-# Script created at 2015-07-23 20:05:44
+
+# Script created at 2015-07-25 16:08:57
