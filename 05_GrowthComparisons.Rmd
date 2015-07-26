@@ -14,7 +14,7 @@ source("knitr_setup.R")
 # Preliminaries
 ```{r results='hide', warning=FALSE, message=FALSE}
 library(FSA)
-library(FSAdata)                 # for Croaker2
+library(FSAdata)                 # for Croaker2 data
 library(dplyr)                   # for mutate()
 ```
 

@@ -14,13 +14,14 @@ source("knitr_setup.R")
 # Preliminaries
 ```{r results='hide', warning=FALSE, message=FALSE}
 library(FSA)                     # for headtail(), filterD(), vbModels(), vbStart(), vbFuns()
+library(FSAdata)                 # for TroutBR data
 library(nlstools)                # for nlsBoot()
 ```
 
 # Loading the Data and Some Preparations
 ```{r}
-d <- read.csv("data/TroutBR.csv",header=TRUE)
-rbt <- filterD(d,species=="Rainbow")
+data(TroutBR)
+rbt <- filterD(TroutBR,species=="Rainbow")
 str(rbt)
 ```
 
@@ -38,14 +39,14 @@ vbModels()
 # Fit Typical VBGF
 ## Declare a Function
 ```{r fig.width=8, fig.height=4, out.width='.98\\linewidth', par1=TRUE}
-vb <- vbFuns("typical")
+vb <- vbFuns("Typical")
 vb
 ```
 
 ## Find Starting Values
 ```{r fig.show='hold'}
-svb.bad <- vbStarts(tl~age,data=rbt,type="typical",plot=TRUE)             # Left
-svb <- vbStarts(tl~age,data=rbt,type="typical",meth0="yngAge",plot=TRUE)  # Right
+svb.bad <- vbStarts(tl~age,data=rbt,type="Typical",plot=TRUE)             # Left
+svb <- vbStarts(tl~age,data=rbt,type="Typical",meth0="yngAge",plot=TRUE)  # Right
 unlist(svb)   # unlist() only to save space
 ```
 ```{r eval=FALSE}
@@ -63,8 +64,10 @@ summary(fit1,correlation=TRUE)
 ( cf <- coef(fit1) )
 confint(fit1)
 ```
-```{r fig.width=7,fig.height=3,cache=TRUE}
+```{r cache=TRUE}
 boot1 <- nlsBoot(fit1,niter=1000)
+```
+```{r fig.width=7,fig.height=3}
 confint(boot1,plot=TRUE,rows=1,cols=3)
 ```
 

@@ -1,10 +1,11 @@
 # AFS Portland 16-Aug-15
 
 library(FSA)                     # for headtail(), filterD(), vbModels(), vbStart(), vbFuns()
+library(FSAdata)                 # for TroutBR data
 library(nlstools)                # for nlsBoot()
 
-d <- read.csv("data/TroutBR.csv",header=TRUE)
-rbt <- filterD(d,species=="Rainbow")
+data(TroutBR)
+rbt <- filterD(TroutBR,species=="Rainbow")
 str(rbt)
 
 xlbl <- "Age (yrs)"
@@ -13,11 +14,11 @@ clr <- rgb(0,0,0,0.05)
 
 vbModels()
 
-vb <- vbFuns("typical")
+vb <- vbFuns("Typical")
 vb
 
-svb.bad <- vbStarts(tl~age,data=rbt,type="typical",plot=TRUE)             # Left
-svb <- vbStarts(tl~age,data=rbt,type="typical",meth0="yngAge",plot=TRUE)  # Right
+svb.bad <- vbStarts(tl~age,data=rbt,type="Typical",plot=TRUE)             # Left
+svb <- vbStarts(tl~age,data=rbt,type="Typical",meth0="yngAge",plot=TRUE)  # Right
 unlist(svb)   # unlist() only to save space
 
 # Dynamically approximately fit the function -- Can't be shown in a handout
@@ -30,6 +31,7 @@ summary(fit1,correlation=TRUE)
 confint(fit1)
 
 boot1 <- nlsBoot(fit1,niter=1000)
+
 confint(boot1,plot=TRUE,rows=1,cols=3)
 
 ageX <- 8
@@ -45,4 +47,4 @@ curve(vb(x,cf),from=3,to=10,n=500,lwd=2,col="red",add=TRUE)
 residPlot(fit1)
 
 
-# Script created at 2015-07-25 16:08:57
+# Script created at 2015-07-26 17:25:22
