@@ -1,9 +1,5 @@
 # AFS Portland 16-Aug-15
 
-library(FSA)                             # for ... alkIndivAge(), Summarize(), fact2num()
-library(dplyr)
-library(nnet)
-
 source("scripts/02_ALKConstruction.R")   # appropriately set the working directory before this
 
 ls()
@@ -17,6 +13,7 @@ str(sp.comb)
 
 agefreq <- xtabs(~age,data=sp.comb)
 prop.table(agefreq)
+
 hist(~age,data=sp.comb,breaks=0:5,xlab="Age (yrs)")
 
 ( sp.sum <- Summarize(tl~age,data=sp.comb,digits=2) )
@@ -24,4 +21,4 @@ plot(tl~age,data=sp.comb,ylab="Total Length (mm)",xlab="Age (yrs)",pch=16,col=rg
 lines(mean~fact2num(age),data=sp.sum,col="blue",lwd=2)
 
 
-# Script created at 2015-07-23 19:40:22
+# Script created at 2015-07-26 12:35:19

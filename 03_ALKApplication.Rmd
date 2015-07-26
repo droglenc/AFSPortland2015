@@ -11,15 +11,8 @@ library(knitr)
 source("knitr_setup.R")
 ```
 
-# Preliminaries
-```{r results='hide', warning=FALSE, message=FALSE}
-library(FSA)                             # for ... alkIndivAge(), Summarize(), fact2num()
-library(dplyr)
-library(nnet)
-```
-
-# Sourcing the Previous Script
-```{r, results='hide', fig.show='hide'}
+# Source the Previous Script
+```{r, results='hide', fig.show='hide', message=FALSE}
 source("scripts/02_ALKConstruction.R")   # appropriately set the working directory before this
 ```
 \vspace{-24pt}
@@ -42,6 +35,9 @@ str(sp.comb)
 ```{r}
 agefreq <- xtabs(~age,data=sp.comb)
 prop.table(agefreq)
+```
+\newpage
+```{r}
 hist(~age,data=sp.comb,breaks=0:5,xlab="Age (yrs)")
 ```
 ```{r fig.show='hold'}

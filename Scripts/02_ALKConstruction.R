@@ -1,22 +1,23 @@
 # AFS Portland 16-Aug-15
 
 library(FSA)                                # for headtail(), alkPlot()
+library(FSAdata)                            # for SpotVA2 data
 library(dplyr)                              # for filter(), mutate()
 library(nnet)                               # for multinom()
 
-sp <- read.csv("data/SpotVA2.csv",header=TRUE)   # appropriately set the working directory before this
-headtail(sp)
+data(SpotVA2)
+headtail(SpotVA2)
 
 # ############################################################
 # This code demonstrates the use of is.na().  It is not needed
 # for the analysis.
-tmp <- headtail(sp) 
+tmp <- headtail(SpotVA2) 
 cbind(tmp,is.na(tmp$age),!is.na(tmp$age))
 # ############################################################
 
-sp.len <- filter(sp,is.na(age))
+sp.len <- filter(SpotVA2,is.na(age))
 headtail(sp.len)
-sp.age <- filter(sp,!is.na(age))
+sp.age <- filter(SpotVA2,!is.na(age))
 headtail(sp.age)
 
 sp.age.mod <- mutate(sp.age,lcat=lencat(tl,w=1))
@@ -32,12 +33,14 @@ ALK.sm <- predict(mlr,data.frame(lcat=lens),type="probs")
 row.names(ALK.sm) <- lens
 round(ALK.sm,3)
 
-alkPlot(ALK.obs,pal="gray",xlab="Total Length (cm)")
+alkPlot(ALK.obs,xlab="Total Length (cm)")
 alkPlot(ALK.sm,xlab="Total Length (cm)")
-alkPlot(ALK.sm,pal="gray",showLegend=TRUE,xlab="Total Length (cm)")
-alkPlot(ALK.sm,type="area",pal="gray",showLegend=TRUE,xlab="Total Length (cm)")
-alkPlot(ALK.sm,type="lines",pal="gray",xlab="Total Length (cm)")
-alkPlot(ALK.sm,type="bubble",xlab="Total Length (cm)")
+
+alkPlot(ALK.sm,xlab="Total Length (cm)",pal="gray",showLegend=TRUE)
+alkPlot(ALK.sm,xlab="Total Length (cm)",pal="gray",showLegend=TRUE,type="area")
+
+alkPlot(ALK.sm,xlab="Total Length (cm)",pal="gray",type="lines")
+alkPlot(ALK.sm,xlab="Total Length (cm)",type="bubble")
 
 
-# Script created at 2015-07-23 19:38:37
+# Script created at 2015-07-26 12:14:05
