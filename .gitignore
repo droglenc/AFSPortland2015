@@ -16,3 +16,4 @@ vignettes/*.pdf
 # Other folders
 Administration/
 Figs/
+*_cache/
