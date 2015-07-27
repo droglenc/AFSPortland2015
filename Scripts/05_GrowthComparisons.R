@@ -1,7 +1,7 @@
 # AFS Portland 16-Aug-15
 
 library(FSA)
-library(FSAdata)                 # for Croaker2
+library(FSAdata)                 # for Croaker2 data
 library(dplyr)                   # for mutate()
 
 data(Croaker2)
@@ -45,8 +45,8 @@ svK <- Map(rep,svOm,c(1,2,1))
 fitK <- nls(vbK,data=Croaker2,start=svK)
 extraSS(fitL,fitK,com=fitLK,com.name="{Linf,K}",sim.names=c("{Linf}","{K}"))
 
-summary(fitL)
-cbind(coef(fitL),confint(fitL))
+summary(fitL,correlation=TRUE)
+round(cbind(coef(fitL),confint(fitL)),3)
 
 vb <- vbFuns("typical")
 # Females
@@ -80,4 +80,4 @@ mnames <- c("{Omega}","{Linf}","{K}","{t0}","{Linf,K}","{Linf,t0}","{K,t0}","{Li
 aictab(ms,mnames)
 
 
-# Script created at 2015-07-25 12:03:47
+# Script created at 2015-07-26 21:14:52

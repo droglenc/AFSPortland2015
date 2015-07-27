@@ -82,8 +82,8 @@ extraSS(fitL,fitK,com=fitLK,com.name="{Linf,K}",sim.names=c("{Linf}","{K}"))
 
 # Summarize Final Model
 ```{r}
-summary(fitL)
-cbind(coef(fitL),confint(fitL))
+summary(fitL,correlation=TRUE)
+round(cbind(coef(fitL),confint(fitL)),3)
 ```
 
 ```{r}
