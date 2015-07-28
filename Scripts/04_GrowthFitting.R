@@ -47,4 +47,4 @@ curve(vb(x,cf),from=3,to=10,n=500,lwd=2,col="red",add=TRUE)
 residPlot(fit1)
 
 
-# Script created at 2015-07-26 17:25:22
+# Script created at 2015-07-28 12:55:22

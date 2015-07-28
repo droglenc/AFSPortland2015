@@ -1,0 +1,128 @@
+\documentclass{article}
+\input{c:/aaaWork/zGnrlLatex/GnrlPreamble}
+\hypersetup{pdftitle = Portland AFS -- Install RStudio}
+\input{c:/aaaWork/zGnrlLatex/JustRPreamble}
+\setcounter{secnumdepth}{0}  % have unnumbered sections appear in TOC
+
+\begin{document}
+<<just_latex, echo=FALSE, cache=FALSE, results='hide'>>=
+# this is needed b/c it is an RNW file without any R code chunks
+@
+\title{\textbf{Installing, Preparing, and Introducing RStudio}}
+\date{}
+\maketitle
+
+\vspace*{-60pt}
+\section{Basic RStudio Installation}
+\begin{enumerate}
+\vspace*{-12pt}
+  \item Go to the R Studio download page at \href{http://www.rstudio.com/products/rstudio/\#Desktop}{www.rstudio.com/products/rstudio/\#Desktop}.  Press the ``DOWNLOAD RSTUDIO DESKTOP'' button/graphic (near bottom-left of the image below).
+\begin{center}
+  \includegraphics[width=5.6in]{Figs/RStudio_Install_Home.png}
+\end{center}
+
+  \item Select the link from the ``Installers for Supported Platforms'' list that corresponds to the operating system appropriate for your computer.  In the remainder of these directions I will demonstrate the installation for a WINDOWS operating system.  Either run the program or note where this executable program is saved on your computer.
+\begin{center}
+  \includegraphics[width=5.6in]{Figs/RStudio_Install_ChooseOS.png}
+\end{center}
+
+  \item If you did not run the program, then locate and run the downloaded file (called ``RStudio-0.99.467.exe'' or similar if the version number has changed).
+
+  \item Press ``Next'' on the first ``Welcome'' dialog box (depending on your version of Windows you may have received security warnings before this dialog box appears).
+
+  \item Select a location to install RStudio (simply use the default location if the location is not important to you -- in the dialog box below I installed in a custom directory).  Press ``Next.''
+\begin{center}
+  \includegraphics[width=3in]{Figs/RStudio_Install_Directory.png}
+\end{center}
+
+  \item Decide whether or not to create a shortcut in the Start Menu folder (I suggest you DO).  Press ``Install.''
+
+  \item RStudio should then begin installing files into the directory you chose previously.  If everything goes well then you should get one last dialog box noting such.  Press ``Finish.''
+
+  \item If you did not create a shortcut above then you will need to locate the ``rstudio.exe'' file inside the ``RStudio/bin'' folders inside the folder you chose to install RStudio in.  On my computer, for example this file is inside of ``C:/apps/RStudio/bin''.
+\end{enumerate}
+
+
+
+
+\newpage
+\section{Preparing RStudio}
+\begin{enumerate}
+  \item Open RStudio.
+
+  \item Select the ``Tools'' menu and then the ``Global Options'' submenu.  In the ensuing dialog box select the ``General'' icon on the left (this should already be selected).
+\begin{center}
+  \includegraphics[width=3in]{Figs/RStudio_Prep_OptionsGeneral.png}
+\end{center}
+  \begin{itemize}
+    \item Depending on your installation, the R version should read ``[Default][32-bit]'' followed by the path to the R program (as shown in the dialog box above).  If you installed the 64-bit version of R, then select the ``Change...'' button and then ``use your machine's default version of R64 (64-bit)''.
+    \item You can either leave the other selections at their defaults or change them as you see fit (my preferences are shown in the dialog box above).  However, I strongly urge you to un-select ``Restore .RData into workspace at startup'' and make ``Save workspace to .RData on exit:'' is set to ``Never.''
+  \end{itemize}
+
+  \item Select the ``Packages'' icon in the ``options'' dialog box opened above.  It is useful to set a CRAN mirror in this dialog box.  I prefer the ``0-Cloud - Rstudio ...'' option but you may want to choose a location nearer to you (through the ``change'' button).  All other options can remain at their defaults.
+\begin{center}
+  \includegraphics[width=3in]{Figs/RStudio_Prep_OptionsCRAN.png}
+\end{center}
+
+  \item Select the ``Code'' icon in the ``Options'' dialog box opened above and the ``Display'' tab.  I suggest, in addition to the default selections, selecting the ``Highlight selected line'', ``Show margin'', and ``Show syntax highlighting in console input.''
+\begin{center}
+  \includegraphics[width=3in]{Figs/RStudio_Prep_OptionsCodeEditing.png}
+\end{center}
+
+  \item At times I find the code completion options in RStudio irritating.  If you do as well, you can either turn this option off or tweak its settings within the ``Completion'' tab under the ``Code'' icon in the ``Options'' dialog box opened above.
+
+  \item No other options need to be set for our purposes.  Press ``OK.''
+\end{enumerate}
+
+
+
+
+\newpage
+\section{Introducing RStudio}
+\subsection{What is RStudio?}
+\vspace{-12pt}
+R is an open-source software environment for statistical computing and graphics that runs on Windows, Mac OS, and many UNIX platforms.  Unlike many other programs, users interact with R through a command line rather than through a graphical user interface.    While such an interface may be unfamiliar to many users, its primary strength is the ability for a user to develop scripts of commands to perform various analyses that can then be easily repeated.
+
+RStudio is an open-source integrated development environment (IDE) that serves as a front-end ``on top'' of R.  RStudio eases the user's interaction with R by providing some of the conveniences of a GUI and, more importantly, a means for efficiently constructing and running R scripts.  Among other conveniences, RStudio provides a four-panel layout that includes a feature-rich source-code editor (includes syntax highlighting, parentheses completion, spell-checking, etc.), a tight link to the R console, a system for examining objects saved in R, an interface to R help, and extended features to examine and save plots.
+
+Using RStudio is easy to learn.  This document is a very brief introduction to RStudio.
+
+
+\subsection{RStudio Design}
+\vspace{-12pt}
+RStudio is organized around a four-panel layout \figrefp{fig:RStudioLayout}.  The upper-left panel is the R \textit{Script Editor}.  R commands are typed into this panel and submitted to the R \textit{Console} in the lower-left panel.  For most applications, you will type R commands into the \textit{Script Editor} and submit them to the \textit{Console}; you will not type commands directly into the \textit{Console}.  The \textit{Script Editor} is a high-level text editor, whereas the \textit{Console} is the R program.
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=5.8in]{Figs/RStudio_Intro_Layout.png}
+    \caption{Example of the RStudio layout with the \textit{Script Editor} in the upper-left, \textit{Console} in the lower-left, the \textit{environment} tab shown in the upper-right, and the \textit{Plot} tab shown in the lower-right panels.}
+  \label{fig:RStudioLayout}
+\end{figure}
+
+The upper-right panel contains at least two tabs -- \textit{Environment} and \textit{History}.  Many items listed under the \textit{Environment} tab can be double-clicked to open them for viewing as a tab in the \textit{Script Editor}.  The \textit{History} tab simply shows all of the commands that you have submitted to the \textit{Console} during the current session.
+
+The lower-right panel contains at least five tabs -- \textit{Files}, \textit{Plots}, \textit{Packages}, \textit{Help}, and \textit{Viewer}.  The \textit{Plots} tab will show the high-level plots produced by commands submitted to the \textit{Console}.  One can cycle through the history of constructed plots with the arrows on the left side of the plot toolbar and plots can be saved to external files using the ``Export'' tab on the plot toolbar \figrefp{fig:RStudioLayout}.  A list of all installed packaged is seen by selecting the \textit{Packages} tab (packages can also be installed through this tab as described in a separate document).  Help for each package can be obtained by clicking on the name of package\footnote{Help can also be obtained by typing a question mark and then the name of the package in the console -- e.g., \R{?FSA}.}.  The help will then appear in the \textit{Help} tab.
+
+\subsection{Basic Usage}
+Our primary interaction with RStudio will be through developing R scripts in the \textit{Script Editor}, submitting those scripts to the \textit{Console}, and viewing textual or tabular results in the \textit{Console}, and graphical results in the \textit{Plot} panel.  In this section, I briefly introduce how to construct and run R scripts in RStudio.
+
+One opens a blank file for an R script by selecting the ``New'' icon (\includegraphics[scale=0.8]{Figs/RStudio_Icon_New.png}) and then \texttt{R Script}; selecting the \texttt{File} menu, \texttt{New} submenu, and \texttt{R Script} item; or with \verb+<CTRL>+ + \verb+<Shift>+ + \verb+N+.  In the newly created \textit{Script Editor} pane, type the three lines exactly as shown below\footnote{For the moment, don't worry about what these lines ``do.''}.
+
+<<eval=FALSE,tidy=FALSE>>=
+dat <- rnorm(100)    # create random normal data (n=100)
+hist(dat,main="")    # histogram of data without a title
+summary(dat)         # summary statistics
+@
+
+These commands must be submitted to the \textit{Console} to perform the requested calculations.  Commands may be submitted to the \textit{Console} in a variety of ways:
+
+\begin{itemize}
+  \item Put the cursor on a line in the \textit{Script Editor} and press the ``Run'' icon (\includegraphics[scale=0.8]{Figs/RStudio_Icon_Run.png}; altenatively press \verb+<CTRL>+ + \verb+<Enter>+).  This will submit that line to the \textit{Console} and move the cursor to the next line in the \textit{Script Editor}.  Pressing ``Run'' again will submit this next line.  And so on.
+  \item Select all lines in the \textit{Script Editor} that you wish to submit and press \includegraphics[scale=0.8]{Figs/RStudio_Icon_Run.png} (or \verb+<CTRL>+ + \verb+<Enter>+).
+\end{itemize}
+
+The RStudio layout after using the first method is shown in \figref{fig:RStudioLayout}.
+
+The R Script in the \textit{Script Editor} should now be saved by selecting the \texttt{File} menu and the \texttt{Save} item (alternatively, pressing \verb+<CTRL>+ + \verb+S+).  RStudio can now be closed (do NOT save the workspace).  When RStudio is re-started later, the script can be re-opened (choose the \texttt{File} menu and the \texttt{Open file ...} submenu if the file is not already in the \textit{Script Editor}) and re-submitted to the \textit{Console} to exactly repeat the analyses\footnote{Note that the results of commands are not saved in R or RStudio; rather the commands are saved and re-submitted to re-perform the analysis.}.
+
+\end{document}

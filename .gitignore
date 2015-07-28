@@ -17,3 +17,10 @@ vignettes/*.pdf
 Administration/
 Figs/
 *_cache/
+
+# Intermediate files
+Course_Prep/*.tex
+Course_Prep/*.synctex.gz
+Course_Prep/*.out
+Course_Prep/*.log
+Course_Prep/*.aux
