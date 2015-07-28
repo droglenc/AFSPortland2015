@@ -63,7 +63,7 @@ clr2 <- c("black","red")
 offset <- 0.04
 # Females
 plot(tl~I(age-offset),data=crF,pch=19,col=clr1[1],ylim=c(200,500),
-     xlab="Age (yrs)",ylab="Total Lengt (mm)")
+     xlab="Age (yrs)",ylab="Total Length (mm)")
 curve(vb(x-offset,coef(fitF)),from=1,to=10,col=clr2[1],lwd=2,add=TRUE)
 # Males
 points(tl~I(age+offset),data=crM,pch=19,col=clr1[2])
@@ -80,4 +80,4 @@ mnames <- c("{Omega}","{Linf}","{K}","{t0}","{Linf,K}","{Linf,t0}","{K,t0}","{Li
 aictab(ms,mnames)
 
 
-# Script created at 2015-07-26 21:14:52
+# Script created at 2015-07-27 19:44:05
