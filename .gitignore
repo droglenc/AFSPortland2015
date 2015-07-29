@@ -17,6 +17,7 @@ vignettes/*.pdf
 Administration/
 Figs/
 *_cache/
+Slides/*.R
 
 # Intermediate files
 Course_Prep/*.tex

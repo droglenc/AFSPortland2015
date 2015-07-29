@@ -1,4 +1,4 @@
-## Age Comparison Slides
+## Script for Age Comparison Slides
 
 library(FSA)
 library(FSAdata)
