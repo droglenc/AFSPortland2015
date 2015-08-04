@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Afsportland2015 : Materials for the &quot;Age and Growth Analyses with R&quot; CE course at AFS meeting in Portland">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Afsportland2015</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/droglenc/AFSPortland2015">View on GitHub</a>
+
+          <h1 id="project_title">Afsportland2015</h1>
+          <h2 id="project_tagline">Materials for the &quot;Age and Growth Analyses with R&quot; CE course at AFS meeting in Portland</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/droglenc/AFSPortland2015/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/droglenc/AFSPortland2015/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a id="course-description" class="anchor" href="#course-description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Course Description</h1>
+
+<p>This one-day course is for fisheries professionals and students interested in expanding their R skills to include analysis of age and growth data.  Through a sequence of demonstrations and hands-on application exercises, participants will use R to construct appropriate metrics and graphics for comparing precision (APE, ACV) and bias (age agreement table, tests of symmetry, and age-bias plots) between two sets of estimated ages, construct and apply an age-length key to estimate ages of individual fish from their lengths, summarize mean length-at-age with a von Bertalanffy growth function (VBGF), and statistically compare VBGF parameters between two or more groups of fish.  Participants should be familiar with the fundamentals of R, including basic applications.</p>
+
+<h1>
+<a id="pre-course-preparation" class="anchor" href="#pre-course-preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pre-Course Preparation</h1>
+
+<ul>
+<li>Install the latest version of R (v3.2.1) on your laptop.  <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Course_Prep/InstallR.pdf">Directions for a first install are here</a>.  If you are using Windows and already have R installed, then <a href="http://www.r-statistics.com/2015/06/a-step-by-step-screenshots-tutorial-for-upgrading-r-on-windows/%22">an easy method to upgrade is described here</a>.</li>
+<li>I prefer to use RStudio to interact with R (but RStudio is not required for this course).  <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Course_Prep/InstallRStudio.pdf">Directions to install and prepare RStudio are here</a> (along with a quick introduction to the RStudio interface).</li>
+<li>Install several packages for use in the course.  Directions for installing these packages are <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Course_Prep/InstallPackages_RStudio.pdf">here if you plan to use RStudio</a> and <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Course_Prep/InstallPackages_R.pdf">here if you plan to use R directly</a>.</li>
+<li>Use the forthcoming Introduction to Fisheries Analysis with R book to (re)familiarize yourself with R basics (Chapters 1-3) and the age and growth (Chapters 4, 5, and 12) topics of the course.</li>
+<li>Finally, from the course materials below, print all R Handouts(for taking notes on) and download all <a href="https://github.com/droglenc/AFSPortland2015/tree/master/Slides">slides</a> and handout <a href="https://github.com/droglenc/AFSPortland2015/tree/master/Scripts">scripts</a> to bring to the course.</li>
+</ul>
+
+<h1>
+<a id="course-materials" class="anchor" href="#course-materials" aria-hidden="true"><span class="octicon octicon-link"></span></a>Course Materials</h1>
+
+<ol>
+<li>
+<p><strong>Precision and Bias</strong></p>
+
+<ul>
+<li>
+<a href="https://github.com/droglenc/AFSPortland2015/raw/master/Slides/01_AgeComparisons.pptx">Slides</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/01_AgeComparisons.pdf">Handout</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Scripts/01_AgeComparisons.R">Script</a> // <a href="https://github.com/droglenc/IFAR/raw/master/4Exercises/xxxDrafts4Web/AgeComparisons_IntroFishAnalysisR_Ex.pdf">Assignment</a>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Age-Length Key -- Construction</strong></p>
+
+<ul>
+<li>
+<a href="https://github.com/droglenc/AFSPortland2015/raw/master/Slides/02_AgeLengthKey.pptx">Slides</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/02_ALKConstruction.pdf">Handout</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Scripts/02_ALKConstruction.R">Script</a> // <a href="https://github.com/droglenc/IFAR/raw/master/4Exercises/xxxDrafts4Web/AgeLengthKey_IntroFishAnalysisR_Ex.pdf">Assignment</a>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Age-Length Key -- Application</strong></p>
+
+<ul>
+<li>
+<a href="https://github.com/droglenc/AFSPortland2015/raw/master/03_ALKApplication.pdf">Handout</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Scripts/03_ALKApplication.R">Script</a>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Growth -- Fit von Bertalanffy Growth Function</strong></p>
+
+<ul>
+<li>
+<a href="https://github.com/droglenc/AFSPortland2015/raw/master/Slides/04_Growth.pptx">Slides</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/04_GrowthFitting.pdf">Handout</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Scripts/04_GrowthFitting.R">Script</a> // <a href="https://github.com/droglenc/IFAR/raw/master/4Exercises/xxxDrafts4Web/Growth_IntroFishAnalysisR_Ex.pdf">Assignment</a>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Growth -- Compare von Bertalanffy Growth Functions</strong></p>
+
+<ul>
+<li>
+<a href="https://github.com/droglenc/AFSPortland2015/raw/master/Slides/05_Growth_Comparison.pptx">Slides</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/05_GrowthComparisons.pdf">Handout</a> // <a href="https://github.com/droglenc/AFSPortland2015/raw/master/Scripts/05_GrowthComparisons.R">Script</a>
+</li>
+</ul>
+</li>
+</ol>
+
+<h1>
+<a id="follow-up" class="anchor" href="#follow-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>Follow-Up</h1>
+
+<ul>
+<li>Please complete this survey regarding this short course.</li>
+<li>If you have any questions please feel free <a href="mailto:dogle@northland.edu">to contact me</a>
+</li>
+</ul>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Afsportland2015 maintained by <a href="https://github.com/droglenc">droglenc</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
