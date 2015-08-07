@@ -36,7 +36,6 @@ confint(boot1,plot=TRUE,rows=1,cols=3)
 
 ageX <- 8
 predict(fit1,data.frame(age=ageX))
-
 headtail(boot1$coefboot)
 pv <- apply(boot1$coefboot,MARGIN=1,FUN=vb,t=ageX)
 quantile(pv,c(0.025,0.975))
@@ -47,4 +46,4 @@ curve(vb(x,cf),from=3,to=10,n=500,lwd=2,col="red",add=TRUE)
 residPlot(fit1)
 
 
-# Script created at 2015-07-28 12:55:22
+# Script created at 2015-08-07 10:52:15

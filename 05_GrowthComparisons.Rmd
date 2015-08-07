@@ -49,7 +49,7 @@ residPlot(fitLKt,col=rgb(0,0,0,1/3))
 vbOm <- logTL~log(Linf*(1-exp(-K*(age-t0))))
 fitOm <- nls(vbOm,data=Croaker2,start=svOm)
 ```
-```{r}
+```{r message=FALSE}
 extraSS(fitOm,com=fitLKt,sim.name="{Omega}",com.name="{Linf,K,t0}")
 lrt(fitOm,com=fitLKt,sim.name="{Omega}",com.name="{Linf,K,t0}")
 ```
@@ -86,7 +86,7 @@ summary(fitL,correlation=TRUE)
 round(cbind(coef(fitL),confint(fitL)),3)
 ```
 
-```{r}
+```{r, message=FALSE}
 vb <- vbFuns("typical")
 # Females
 crF <- filterD(Croaker2,sex=="F")

@@ -21,4 +21,4 @@ plot(tl~age,data=sp.comb,ylab="Total Length (mm)",xlab="Age (yrs)",pch=16,col=rg
 lines(mean~fact2num(age),data=sp.sum,col="blue",lwd=2)
 
 
-# Script created at 2015-07-26 12:35:19
+# Script created at 2015-08-07 10:42:08

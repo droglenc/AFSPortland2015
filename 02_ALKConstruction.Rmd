@@ -64,7 +64,7 @@ round(ALK.sm,3)
 ```
 
 # Visualizing an Age-Length Key
-```{r fig.show='hold'}
+```{r fig.show='hold', message=FALSE}
 alkPlot(ALK.obs,xlab="Total Length (cm)")
 alkPlot(ALK.sm,xlab="Total Length (cm)")
 ```
@@ -72,6 +72,8 @@ alkPlot(ALK.sm,xlab="Total Length (cm)")
 alkPlot(ALK.sm,xlab="Total Length (cm)",pal="gray",showLegend=TRUE)
 alkPlot(ALK.sm,xlab="Total Length (cm)",pal="gray",showLegend=TRUE,type="area")
 ```
+
+\newpage
 ```{r fig.show='hold'}
 alkPlot(ALK.sm,xlab="Total Length (cm)",pal="gray",type="lines")
 alkPlot(ALK.sm,xlab="Total Length (cm)",type="bubble")
